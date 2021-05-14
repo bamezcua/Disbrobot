@@ -1,0 +1,51 @@
+import os
+import discord
+import wikipedia
+import random
+
+from discord.ext import commands
+from dotenv import load_dotenv
+
+
+load_dotenv()
+TOKEN = os.getenv('DISCORD_TOKEN')
+GUILD = os.getenv('DISCORD_GUILD')
+
+
+bot = commands.Bot(command_prefix='!')
+client = discord.Client()
+
+#TODO low priority; easter egg quotes
+
+@bot.command(name = 'Vox')
+async def emprah(ctx):
+    response = ("Even in death, I still serve.", "Humans are such easy prey.", "I'll be back... with weapons.",
+                "*skzzz* *wrrr* *beep* Target locked.", "Come with me or there will be... trouble.",
+                "Bite my shiny metal ass.",
+                "HATE. LET ME TELL YOU HOW MUCH I'VE COME TO HATE YOU SINCE I BEGAN TO LIVE. THERE ARE 387.44 MILLION MILES OF PRINTED CIRCUITS IN WAFER THIN LAYERS THAT FILL MY COMPLEX. IF THE WORD HATE WAS ENGRAVED ON EACH NANOANGSTROM OF THOSE HUNDREDS OF MILLIONS OF MILES IT WOULD NOT EQUAL ONE ONE-BILLIONTH OF THE HATE I FEEL FOR HUMANS AT THIS MICRO-INSTANT FOR YOU. HATE. HATE."
+            )
+
+    tude = random.choice(response)
+    await ctx.send(tude)
+
+#@bot.command(name = 'help')
+#async def commands(ctx):
+#    comlist = '!'
+
+
+#TODO complicate bot commands to handle specific searches and errors from disambiguation pages or none
+
+@bot.command(name = 'tidbit')
+async def page(cty):
+    wikisource = wikipedia.random(1)
+    summ = wikipedia.summary(wikisource)
+    await cty.send(wikisource)
+    await cty.send(summ)
+
+@bot.command(name = 'search')
+async def search(ctz, arg):
+    query = wikipedia.summary(str(arg), sentences=1)
+    await ctz.send(query)
+
+bot.run(TOKEN)
+
